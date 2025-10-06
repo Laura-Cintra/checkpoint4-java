@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Visualizar Usuário</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Usuário: [[${user.name}]]</h1>
+    <ul>
+        <li><strong>ID: </strong><span th:text="${user.id}"></span></li>
+        <li><strong>Nome: </strong><span th:text="${user.name}"></span></li>
+        <li><strong>E-mail: </strong><span th:text="${user.email}"></span></li>
+        <li><strong>Senha: </strong>
+            <span th:text="${#strings.repeat('*', user.password.length())}"></span>
+        </li>
+    </ul>
+    <a class="btn" th:href="@{/users}">Voltar</a>
+</div>
+</body>
+</html>

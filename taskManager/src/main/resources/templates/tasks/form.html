@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Cadastro de Tarefa</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </head>
+    <body>
+        <div class="container">
+            <h1 th:text="${task.id == null ? 'Nova Tarefa' : 'Editar Tarefa'}"></h1>
+            <form th:action="@{/tasks/save}" th:object="${task}" method="POST">
+                <input type="hidden" th:field="*{id}"> <!--guarda o id escondido para eu passar nas requisições-->
+
+                <label>Título</label>
+                <input type="text" th:field="*{title}">
+                <span class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+
+                <label>Descrição</label>
+                <input type="text" th:field="*{description}">
+                <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+
+                <label>Data de Criação</label>
+                <input type="date" th:field="*{creationDate}">
+                <span class="error" th:if="${#fields.hasErrors('creationDate')}" th:errors="*{creationDate}"></span>
+
+                <label>Data de Conclusão</label>
+                <input type="date" th:field="*{completionDate}">
+                <span class="error" th:if="${#fields.hasErrors('completionDate')}" th:errors="*{completionDate}"></span>
+
+                <label>Prazo</label>
+                <input type="date" th:field="*{dueDate}">
+                <span class="error" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></span>
+
+                <label>Status</label>
+                <select th:field="*{status}">
+                    <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}"></option>
+                </select>
+
+                <label>Prioridade:</label>
+                <select th:field="*{priority}">
+                    <option th:each="p : ${priorities}" th:value="${p}" th:text="${p}"></option>
+                </select>
+
+                <div>
+                    <button type="button" onclick="confirmarEnvio()">Salvar</button>
+                    <a th:href="@{/tasks}">Voltar</a>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

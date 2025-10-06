@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cadastro de Usuário</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${user.id == null ? 'Novo Usuário' : 'Editar Usuário'}"></h1>
+    <form th:action="${user.id == null} ? @{/users/save} : @{/users/edit/{id}(id=${user.id})}"
+          th:object="${user}" method="POST">
+        <input type="hidden" th:field="*{id}">
+
+        <label>Nome</label>
+        <input type="text" th:field="*{name}">
+        <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+        <label>E-mail</label>
+        <input type="email" th:field="*{email}">
+        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+
+        <label>Senha</label>
+        <input type="password" th:field="*{password}" id="passwordInput" style="padding-right: 30px;">
+        <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+
+        <div>
+            <button type="button" onclick="confirmarEnvio()">Salvar</button>
+            <a th:href="@{/users}">Voltar</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    function confirmarEnvio() {
+        if (confirm("Deseja salvar este usuário?")) {
+            document.querySelector("form").submit();
+        }
+    }
+</script>
+</body>
+</html>
